@@ -155,7 +155,8 @@ class VerifyEmail
       if (!preg_match("/^250/i", $out)) {
         if (!preg_match("/^250/i", $out)) {
           preg_match('!\d+!', $out, $matches);
-          preg_match('/\d+\.\d+\.\d+/', $out, $sMatches);
+          // Extract reply code that starts with a single digit and has the format of X.X.X
+          preg_match('/\b\d\.\d+\.\d+\b/', $out, $sMatches);
           $reply_code = isset($sMatches[0]) ? $sMatches[0] : '';
           $this->add_error($matches[0], $reply_code, $out);
         }

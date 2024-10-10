@@ -1,7 +1,7 @@
 VerifyEmail
 ==========
 
-## *** IMPORTANT *** This is repo is no longer maintained.
+## *** IMPORTANT *** This is repo is occasionally maintained.
 
 
 
