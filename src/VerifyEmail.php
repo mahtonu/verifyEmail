@@ -145,15 +145,15 @@ class VerifyEmail
     }
 
 
-    $this->debug[] = 'Starting veriffication...';
+    $this->debug[] = 'Starting verification...';
     if (preg_match("/^220/i", $out = fgets($this->connect))) {
       $this->debug[] = 'Got a 220 response. Sending HELO...';
       fputs($this->connect, "HELO " . $this->get_domain($this->verifier_email) . "\r\n");
       $out = fgets($this->connect);
       $this->debug_raw['helo'] = $out;
       $this->debug[] = 'Response: ' . $out;
-      if (!preg_match("/^250/i", $out)) {
-        if (!preg_match("/^250/i", $out)) {
+      if (!preg_match("/^2[0-9]{2}/", $out)) {
+        if (!preg_match("/^2[0-9]{2}/", $out)) {
           preg_match('!\d+!', $out, $matches);
           // Extract reply code that starts with a single digit and has the format of X.X.X or X.X.XX
           preg_match('/\b\d\.\d+\.\d{1,2}\b/', $out, $sMatches);
@@ -194,14 +194,14 @@ class VerifyEmail
       fclose($this->connect);
 
       $this->debug[] = 'Looking for 250 response...';
-      if (!preg_match("/^250/i", $from) || !preg_match("/^250/i", $to)) {
-        if (!preg_match("/^250/i", $from)) {
+      if (!preg_match("/^2[0-9]{2}/", $from) || !preg_match("/^2[0-9]{2}/", $to)) {
+        if (!preg_match("/^2[0-9]{2}/", $from)) {
           preg_match('!\d+!', $from, $matches);
           preg_match('/\d+\.\d+\.\d+/', $from, $sMatches);
           $reply_code = isset($sMatches[0]) ? $sMatches[0] : '';
           $this->add_error($matches[0], $reply_code, $from);
         }
-        if (!preg_match("/^250/i", $to)) {
+        if (!preg_match("/^2[0-9]{2}/", $to)) {
           preg_match('!\d+!', $to, $matches);
           preg_match('/\d+\.\d+\.\d+/', $to, $sMatches);
           $reply_code = isset($sMatches[0]) ? $sMatches[0] : '';
