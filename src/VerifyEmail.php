@@ -156,7 +156,7 @@ class VerifyEmail
         if (!preg_match("/^2[0-9]{2}/", $out)) {
           preg_match('!\d+!', $out, $matches);
           // Extract reply code that starts with a single digit and has the format of X.X.X or X.X.XX
-          preg_match('/\b\d\.\d+\.\d{1,2}\b/', $out, $sMatches);
+          preg_match('/\b\d{1}\.\d{1}\.\d{1,2}\b/', $out, $sMatches);
           $reply_code = isset($sMatches[0]) ? $sMatches[0] : '';
           $this->add_error($matches[0], $reply_code, $out);
         }
@@ -197,13 +197,13 @@ class VerifyEmail
       if (!preg_match("/^2[0-9]{2}/", $from) || !preg_match("/^2[0-9]{2}/", $to)) {
         if (!preg_match("/^2[0-9]{2}/", $from)) {
           preg_match('!\d+!', $from, $matches);
-          preg_match('/\d+\.\d+\.\d+/', $from, $sMatches);
+          preg_match('/\b\d{1}\.\d{1}\.\d{1,2}\b/', $from, $sMatches);
           $reply_code = isset($sMatches[0]) ? $sMatches[0] : '';
           $this->add_error($matches[0], $reply_code, $from);
         }
         if (!preg_match("/^2[0-9]{2}/", $to)) {
           preg_match('!\d+!', $to, $matches);
-          preg_match('/\d+\.\d+\.\d+/', $to, $sMatches);
+          preg_match('/\b\d{1}\.\d{1}\.\d{1,2}\b/', $to, $sMatches);
           $reply_code = isset($sMatches[0]) ? $sMatches[0] : '';
           $this->add_error($matches[0], $reply_code, $to);
         }
