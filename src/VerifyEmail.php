@@ -146,7 +146,8 @@ class VerifyEmail
 
 
     $this->debug[] = 'Starting verification...';
-    if (preg_match("/^220/i", $out = fgets($this->connect))) {
+    $out = fgets($this->connect);
+    if (preg_match("/^220/i", $out)) {
       $this->debug[] = 'Got a 220 response. Sending HELO...';
       fputs($this->connect, "HELO " . $this->get_domain($this->verifier_email) . "\r\n");
       $out = fgets($this->connect);
@@ -214,6 +215,11 @@ class VerifyEmail
         $is_valid = true;
       }
     } else {
+      preg_match('!\d+!', $out, $matches);
+      // Extract reply code that starts with a single digit and has the format of X.X.X or X.X.XX
+      preg_match('/\b\d{1}\.\d{1}\.\d{1,2}\b/', $out, $sMatches);
+      $reply_code = isset($sMatches[0]) ? $sMatches[0] : '';
+      $this->add_error($matches[0], $reply_code, $out);
       $this->debug[] = 'Encountered an unknown response code.';
     }
     //}
