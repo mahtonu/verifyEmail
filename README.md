@@ -17,6 +17,11 @@ How to configure mail server: http://curlybrac.es/2016/07/27/how-to-configure-a-
 
 
 
+Requirements:
+=============
+- PHP 8.4 or newer (tested on PHP 8.5)
+
+
 How to install (using composer):
 ==========================
 Add the package to `composer.json`
